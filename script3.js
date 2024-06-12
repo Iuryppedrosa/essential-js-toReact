@@ -221,113 +221,22 @@ const data = [
   },
 ];
 
-//////////////////////// aula 8 > uso do MAP
+// fetch("https://jsonplaceholder.typicode.com/todos/") //fetching data from the API, I mean, a promise
+//   .then((response) => response.json()) //converting the response to json, I mean, a promise again
+//   .then((json) => {
+//     json.map((item) => {
+//       item.id == 10 ? (item.title = "Iury") : item;
+//     });
+//     console.log(json);
+//   }); //this will be printed first, because the fetch is a promise, and it will be executed after the console.log
 
-function getBooks() {
-  return data;
-}
-const book = getBooks();
+// async function getTodos() {
+//   //await will wait the promise to be resolved only inside an async function
+//   const responde = await fetch("https://jsonplaceholder.typicode.com/todos/");
+//   const data = responde.json();
+//   console.log(data);
+//   return data;
+// }
 
-function totalReviews(book) {
-  return (
-    (book.reviews.goodreads?.reviewsCount ?? 0) +
-    (book.reviews.libraryThing?.reviewsCount ?? 0)
-  );
-}
-
-// const totalReviews = (book) =>
-//   (book.reviews.goodreads?.reviewsCount ?? 0) +
-//   (book.reviews.libraryThing?.reviewsCount ?? 0);
-
-// a forma abaixo, é a forma mais comum de se fazer um map, onde nao se usa o return
-const x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
-  (eachDataIntoArray) => eachDataIntoArray * 2
-);
-console.log(x);
-
-// ja a forma abaixo, é a forma mais correta, onde se usa o return, porem é necessário usar as chaves e atribuir a uma nova variavel o valor da funcao anonima
-const xy = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20].map((eachDataIntoArray) => {
-  return {
-    valor: eachDataIntoArray * 2,
-  };
-});
-console.log(xy);
-
-const title = getBooks().map(
-  (eachDataInsideColectionBook) => eachDataInsideColectionBook.title
-);
-console.log(title);
-
-const essentialData = getBooks().map((eachDataInsideColectionBook) => {
-  return {
-    id: eachDataInsideColectionBook.id,
-    title: eachDataInsideColectionBook.title,
-  };
-});
-
-console.log(essentialData);
-
-//another way is not using the return, but using the parentheses
-const essentialData2 = getBooks()
-  .map((eachDataInsideColectionBook) => ({
-    id: eachDataInsideColectionBook.id,
-    title: eachDataInsideColectionBook.title,
-    // tambem é possivel chamar outras funcoes para calcular algo dentro do map para cada dado
-    reviewsCount: totalReviews(eachDataInsideColectionBook),
-  }))
-  .filter(
-    (eachDataInsideColectionBook) =>
-      eachDataInsideColectionBook.reviewsCount < 15000
-  );
-console.log(essentialData2);
-
-//////////////////////// aula 9 > uso do FILTER, que também é chamado para cada item do array
-
-const book2 = getBooks();
-
-// filter retornam OUTRO array, com os dados filtrados
-const classicBooks = book2
-  .filter((book) => book.pages > 500)
-  .filter((book) => book.hasMovieAdaptation === true);
-
-console.log(classicBooks);
-
-//////////////////////// aula 10 > uso do REDUCE
-const book3 = getBooks();
-
-// reduce retorna um valor unico, que é o valor acumulado
-const pagesAllBooks = book3.reduce(
-  (accumulator, book) => accumulator + book.pages,
-  0
-);
-console.log(pagesAllBooks);
-
-//////////////////////// aula 11 > uso do SORT
-const book4 = getBooks();
-
-const selectSomeBooks = book4.slice().sort((a, b) => a.pages - b.pages);
-console.log(selectSomeBooks);
-// the problem is that the sort method is mutating the original array, so we need to create a new array to avoid this, using the slice method
-
-//////////////////////// aula 12 > working with immutable arrays
-// 1) add a new book to the array
-
-const newBook = {
-  id: 11,
-  title: "The Lord of the Rings",
-  publicationDate: "1954-07-29",
-  author: "J.R.R. Tolkien",
-};
-
-const newBooks = [...book4, newBook];
-console.log(newBooks);
-
-// 2) remove a book from the array
-const removeBook = book4.filter((book) => book.id !== 10);
-console.log(removeBook);
-
-// 3) update a book from the array
-const updateBook = book4.map((book) =>
-  book.id === 9 ? { ...book, title: "Catch-22" } : book
-);
-console.log(updateBook);
+// const todos = getTodos();
+// console.log(todos); //this will be printed second, because the await will wait the promise to be resolved, and then it will be executed
